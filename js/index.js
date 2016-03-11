@@ -1,10 +1,13 @@
-// Honeypot Client vers 0.0.0
+// Honeypot Client vers 0.0.1
 // Uses fetch module to fetch data from endpoint
 // Note: Server does not respond with 'normal' json.
 // Instead, treat it as a string, split data into
 // an array using newline seperator and then parse
 // json for each index...
-// ----- Functions ----- //
+
+/**
+ * Requests data from URL
+ */
 function requestData(url) {
 
     var promise = fetchJson(url)
@@ -27,6 +30,9 @@ function requestData(url) {
         })
 }
 
+/**
+ * Returns a new promise to fetch json through ajax call
+ */
 function fetchJson(url) {
     return new Promise(function(resolve, reject) {
         $.ajax({
@@ -43,6 +49,9 @@ function fetchJson(url) {
     })
 }
 
+/**
+ * Adds an individual element to a div
+ */
 function addItem(key, data, div) {
     try {
         var elem = document.createElement('p')
@@ -53,6 +62,9 @@ function addItem(key, data, div) {
     }
 }
 
+/**
+ * Add all data items to DOM
+ */
 function addDataItems(item, index) {
     var data = JSON.parse(item)
 
@@ -75,15 +87,13 @@ function addDataItems(item, index) {
     addItem('Port', data.Client.Port, div)
     addItem('Socket', data.Client.Socket, div)
 
+    // Add div to DOM
     $('#app').append(div)
 }
-
-// ----- Script ----- //
 
 var URL = 'http://54.200.61.193/clientInfoData.json'
 
 requestData(URL)
-
 setInterval(function() {
     requestData(URL)
 }, 10000)
