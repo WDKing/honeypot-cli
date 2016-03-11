@@ -10,12 +10,24 @@ h1 {
 h2 {
 	margin-top: -20px;
 }
+h4 {
+	margin-top: -10px;
+}
+p {
+	margin-bottom: -10px;
+}
 .center {
 	text-align: center;
 }
+.data-item {
+	margin: 20px;
+	background-color: #555;
+	padding: 20px;
+	border-radius: 5px;
+}
 #app h4{
-    color: lightgreen;
+    color: #8cff66;
 }
 #app p {
-	font-family: 'Ubuntu';
+	font-family: 'Inconsolata';
 }

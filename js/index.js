@@ -7,90 +7,87 @@
 
 // ----- Functions ----- //
 
-function getData() {
-	// Endpoint URL
-	var URL = 'http://54.200.61.193/clientInfoData.json'
-	// Make a new promise to fetch data
-	var promise = fetchJsonFromEndpoint(URL)
-	// Promise is fulfilled
+function requestData(url) {
+	
+	var promise = fetchJson(url)
+
 	promise.then(function(data) {
 		$('#app').html('')
-		
 		var dataItems = data.split('\n')
-
 		dataItems.map(function(item, index) {
-			addDataItem(item, index)
+			addDataItems(item, index)
 		})
 		console.log('Done...')
 	})
 	.catch(function(err) {
-		$('#app').html('')
-	    console.error(err.log())
-	    $('#app').append(err.node())
+		var notFound = document.createElement('div')
+		notFound.className = 'center'
+		notFound.innerHTML = err
+	    console.error(err)
+	    $('#app').html('')
+	    $('#app').append(notFound)
 	})
 }
 
-function fetchJsonFromEndpoint(url) {
+function fetchJson(url) {
     return new Promise(function(resolve, reject) {
  		$.ajax({ 
 		    type: 'GET', 
 		    url: url, 
 		    dataType: 'text', // server responds w/ invalid json 
 		    success: function(data) { 
-		        resolve(data)
+		        resolve(data.trim())
 		    },
 		    error: function(xhr, options, err) {
-		        reject(new FetchError(xhr, err))
+		        reject(new Error(xhr.responseText || err))
 		    }
 		})
     })
 }
 
-function addDataItem(item, index) {
+function addItem(key, data, div) {
+	try {
+		var elem = document.createElement('p')
+		elem.innerHTML = "<strong>" + key + "</strong>: " + data.replace(/[<>]/ig,"")
+		div.appendChild(elem)
+	} catch(e) {
+		//console.log(e.message)
+	}
+}
+
+function addDataItems(item, index) {
+	var data = JSON.parse(item)
+
+	// Div for whole item
 	var div = document.createElement('div')
+	div.className = 'data-item'
+
+	// Server data item number
 	var dataIndex = document.createElement('h4')
-	var dataId = document.createElement('h5')
-	var dataItem = document.createElement('p')
-
-	dataIndex.innerHTML = "Data Item " + index
-	dataId.innerHTML = "$oid: " + ((item) ? JSON.parse(item)._id.$oid : 'No id for item')
-	dataItem.innerHTML = (item) ? item.toString() : "No data for item"
-
+	dataIndex.innerHTML = "Server Data Item " + (index+1)
 	div.appendChild(dataIndex)
-	div.appendChild(dataId)
-	div.appendChild(dataItem)
-
+	
+	// Add data items to display
+	addItem('IP', data.Client.IP, div);
+	addItem('Username', data.Client.Data.Username, div)
+	addItem('Passwords', data.Client.Data.Passwords, div)
+	addItem('ID', data._id.$oid, div);
+	addItem('Key', data.Client.Data.Key, div)
+	addItem('Time', data.Client.Data.Time, div)	
+	addItem('Port', data.Client.Port, div)
+	addItem('Socket', data.Client.Socket, div)
+		
 	$('#app').append(div)
 }
 
-// ----- Objects ----- //
-
-function FetchError(xhr, err) {
-    this.error = err
-    this.status = xhr.status
-    this.response = xhr.responseText
-    this.node = function() {
-    	// Add error to DOM
-	    var node = document.createElement('div')
-		node.className = 'error'
-		node.style.textAlign = 'center'
-		node.style.color = 'red'
-		node.innerHTML = this.response
-		return node
-    }
-    this.log = function() {
-    	return (
-    		"Error:" + this.error + "\n\n" +
-    		"Status: " + this.status + "\n\n" +
-    		"Response: " + this.response
-    	)
-    }
-}
-
 // ----- Script ----- //
-getData()
+
+var URL = 'http://54.200.61.193/clientInfoData.json'
+
+requestData(URL)
+
 setInterval(function() {
-	getData()
+	requestData(URL)
 }, 10000)
 
 
