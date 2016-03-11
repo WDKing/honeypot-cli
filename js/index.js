@@ -5,6 +5,8 @@
 // an array using newline seperator and then parse
 // json for each index...
 
+var URL = 'http://54.200.61.193/clientInfoData.json'
+
 /**
  * Requests data from URL
  */
@@ -74,7 +76,7 @@ function addDataItems(item, index) {
 
     // Server data item number
     var dataIndex = document.createElement('h4')
-    dataIndex.innerHTML = "Server Data Item " + (index + 1)
+    dataIndex.innerHTML = "Server Item (" + (index + 1) + ")"
     div.appendChild(dataIndex)
 
     // Add data items to display
@@ -90,8 +92,6 @@ function addDataItems(item, index) {
     // Add div to DOM
     $('#app').append(div)
 }
-
-var URL = 'http://54.200.61.193/clientInfoData.json'
 
 requestData(URL)
 setInterval(function() {

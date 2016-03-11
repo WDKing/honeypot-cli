@@ -1,14 +1,15 @@
 body {
-	background-color: #333;
+	background-color: #060606;
 	color: white;
-	font-family: 'Lato';
 	margin: 25px;
 }
 h1 {
-	font-family: 'Oswald'
+	font-family: 'VT323';
+	font-size: 3em;
 }
-h2 {
+h3 {
 	margin-top: -20px;
+	font-family: 'Inconsolata';
 }
 h4 {
 	margin-top: -10px;
@@ -20,14 +21,16 @@ p {
 	text-align: center;
 }
 .data-item {
-	margin: 20px;
-	background-color: #555;
+	display: block;
+	width: auto;
+	font-family: 'Inconsolata';
+	margin: 25px;
+	background-color: #232323;
 	padding: 20px;
 	border-radius: 5px;
 }
 #app h4{
     color: #8cff66;
+    font-family: 'Lato';
 }
-#app p {
-	font-family: 'Inconsolata';
-}
+
