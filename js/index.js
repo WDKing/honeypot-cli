@@ -41,6 +41,8 @@ function fetchJson(url) {
             type: 'GET',
             url: url,
             dataType: 'text', // server responds w/ invalid json 
+            async: true,
+            crossDomain: true,
             success: function(data) {
                 resolve(data.trim())
             },
