@@ -15,21 +15,21 @@ function requestData(url) {
     var promise = fetchJson(url)
 
     promise.then(function(data) {
-            $('#app').html('')
-            var dataItems = data.split('\n')
-            dataItems.map(function(item, index) {
-                addDataItems(item, index)
-            })
-            console.log('Done...')
+        $('#app').html('')
+        var dataItems = data.split('\n')
+        dataItems.map(function(item, index) {
+            addDataItems(item, index)
         })
-        .catch(function(err) {
-            var notFound = document.createElement('div')
-            notFound.className = 'center'
-            notFound.innerHTML = err
-            console.error(err)
-            $('#app').html('')
-            $('#app').append(notFound)
-        })
+        console.log('Done...')
+    })
+    .catch(function(err) {
+        var notFound = document.createElement('div')
+        notFound.className = 'center'
+        notFound.innerHTML = err
+        console.error(err)
+        $('#app').html('')
+        $('#app').append(notFound)
+    })
 }
 
 /**
@@ -54,16 +54,18 @@ function fetchJson(url) {
 }
 
 /**
- * Adds an individual element to a div
+ * Construct display itms and append them to the passed in div. 
+ * @return the div
  */
-function addItem(key, data, div) {
-    try {
-        var elem = document.createElement('p')
-        elem.innerHTML = "<strong>" + key + "</strong>: " + data.replace(/[<>]/ig, "")
-        div.appendChild(elem)
-    } catch (e) {
-        //console.log(e.message)
-    }
+function appendValues(values, div) {
+	for (var key in values) {
+		if (values.hasOwnProperty(key)) {
+			var element = document.createElement('p')
+			element.innerHTML = "<strong>" + key + "</strong>:" + values[key] 
+			div.appendChild(element)
+		}
+	}
+	return div
 }
 
 /**
@@ -94,23 +96,10 @@ function addDataItems(item, index) {
     }
 
     // Construct display items
-    var display = constructDisplayItems(displayValues, dataDiv)
+    var displayHtml = appendValues(displayValues, dataDiv)
 
     // Add div to DOM
-    $('#app').append(display)
-}
-
-/**
- * Construct display itms and append them to the passed in div. 
- * @return the div
- */
-function constructDisplayItems(values, div) {
-	for (var key in values) {
-		var element = document.createElement('p')
-		element.innerHTML = "<strong>" + key + "</strong>:" + values[key] 
-		div.appendChild(element)
-	}
-	return div
+    $('#app').append(displayHtml)
 }
 
 requestData(URL)
