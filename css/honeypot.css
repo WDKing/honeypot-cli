@@ -30,6 +30,8 @@ p {
 	border-radius: 5px;
 }
 #app h4{
+	display: inline;
+	float: right;
     color: #8cff66;
     font-family: 'Lato';
 }

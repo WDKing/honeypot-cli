@@ -73,26 +73,44 @@ function addDataItems(item, index) {
     var data = JSON.parse(item)
 
     // Div for whole item
-    var div = document.createElement('div')
-    div.className = 'data-item'
+    var dataDiv = document.createElement('div')
+    dataDiv.className = 'data-item'
 
     // Server data item number
     var dataIndex = document.createElement('h4')
     dataIndex.innerHTML = "Server Item (" + (index + 1) + ")"
     div.appendChild(dataIndex)
 
-    // Add data items to display
-    addItem('IP', data.Client.IP, div);
-    addItem('Username', data.Client.Data.Username, div)
-    addItem('Passwords', data.Client.Data.Passwords, div)
-    addItem('ID', data._id.$oid, div);
-    addItem('Key', data.Client.Data.Key, div)
-    addItem('Time', data.Client.Data.Time, div)
-    addItem('Port', data.Client.Port, div)
-    addItem('Socket', data.Client.Socket, div)
+    // JSON value table
+    var displayValues = {
+    	"IP": data.Client.IP,
+    	"Username": data.Client.Data.Username,
+    	"Passwords": data.Client.Data.Passwords,
+    	"ID": data._id.$oid,
+    	"Key": data.Client.Data.Key,
+    	"Time": data.Client.Data.Time,
+    	"Port": data.Client.Port,
+    	"Socket": data.Client.Socket
+    }
+
+    // Construct display items
+    var display = constructDisplayItems(displayValues, dataDiv)
 
     // Add div to DOM
-    $('#app').append(div)
+    $('#app').append(display)
+}
+
+/**
+ * Construct display itms and append them to the passed in div. 
+ * @return the div
+ */
+function constructDisplayItems(values, div) {
+	for (var key in values) {
+		var element = document.createElement('p')
+		element.innerHTML = "<strong>" + key + "</strong>:" + values[key] 
+		div.appendChild(element)
+	}
+	return div
 }
 
 requestData(URL)
