@@ -57,15 +57,23 @@ function fetchJson(url) {
  * Construct display itms and append them to the passed in div. 
  * @return the div
  */
-function appendValues(values, div) {
+function constructTable(values, div) {
+    var table = document.createElement('table')
+    table.className = 'data-table'
+
 	for (var key in values) {
 		if (values.hasOwnProperty(key)) {
-			var element = document.createElement('p')
-			element.innerHTML = "<strong>" + key + "</strong>:" + values[key] 
-			div.appendChild(element)
+            var tr = document.createElement('tr')
+			var th = document.createElement('th')
+            var td = document.createElement('td')
+			th.innerHTML = "<strong>" + key + "</strong>" 
+            td.innerHTML = values[key]
+            tr.appendChild(th)
+            tr.appendChild(td)
+			table.appendChild(tr)
 		}
 	}
-	return div
+	return table
 }
 
 /**
@@ -81,7 +89,9 @@ function addDataItems(item, index) {
     // Server data item number
     var dataIndex = document.createElement('h4')
     dataIndex.innerHTML = "Server Item (" + (index + 1) + ")"
-    div.appendChild(dataIndex)
+    dataDiv.appendChild(dataIndex)
+
+     $('#app').append(dataDiv)
 
     // JSON value table
     var displayValues = {
@@ -92,14 +102,14 @@ function addDataItems(item, index) {
     	"Key": data.Client.Data.Key,
     	"Time": data.Client.Data.Time,
     	"Port": data.Client.Port,
-    	"Socket": data.Client.Socket
+    	"Socket": data.Client.Socket.toString()
     }
 
     // Construct display items
-    var displayHtml = appendValues(displayValues, dataDiv)
+    var itemTable = constructTable(displayValues, dataDiv)
 
     // Add div to DOM
-    $('#app').append(displayHtml)
+    $('#app').append(itemTable)
 }
 
 requestData(URL)
