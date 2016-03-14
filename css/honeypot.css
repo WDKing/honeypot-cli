@@ -1,21 +1,55 @@
 body {
-    background-color: #333;
-    color: white;
-    font-family: 'Lato';
-    margin: 25px;
+	background-color: #060606;
+	color: white;
+	margin: 25px;
 }
 h1 {
-    font-family: 'Oswald'
+	font-family: 'Oswald';
+	font-size: 3em;
 }
-h2 {
-    margin-top: -20px;
+h3 {
+	margin-top: -20px;
+	font-family: 'Inconsolata';
+}
+p {
+	margin-bottom: -10px;
 }
 .center {
-    text-align: center;
+	text-align: center;
+}
+.data-table {
+	display: block;
+	width: auto;
+	
+	margin: 25px;
+
+	padding: 20px;
+	border-radius: 5px;
 }
 #app h4{
-    color: lightgreen;
+	margin-left: 30px;
+    color: #8cff66;
+    font-family: 'Oswald';
+    letter-spacing: .1em;
+    cursor: pointer;
+    color:#fff;
 }
-#app p {
-    font-family: 'Ubuntu';
+table {
+   margin: 25px;
+   border-collapse: collapse;
+   background-color: #666; 
+   text-align: left;
+   border: 3px solid black;
 }
+th, td {
+	padding: 10px;
+}
+th {
+	font-family: 'Lato';
+}
+td {
+	font-family: 'Inconsolata';
+	color: white;
+	font-size: 1.15em;
+}
+
